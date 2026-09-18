@@ -1,0 +1,168 @@
+{
+  "walls": [
+    {
+      "x": 1000,
+      "y": 100,
+      "w": 2000,
+      "h": 40
+    },
+    {
+      "x": 1000,
+      "y": 1900,
+      "w": 2000,
+      "h": 40
+    },
+    {
+      "x": 100,
+      "y": 1000,
+      "w": 40,
+      "h": 2000
+    },
+    {
+      "x": 1900,
+      "y": 1000,
+      "w": 40,
+      "h": 2000
+    },
+
+    {
+      "x": 700,
+      "y": 600,
+      "w": 200,
+      "h": 40
+    },
+    {
+      "x": 700,
+      "y": 600,
+      "w": 40,
+      "h": 200
+    },
+    {
+      "x": 1300,
+      "y": 900,
+      "w": 40,
+      "h": 300
+    },
+    {
+      "x": 1300,
+      "y": 900,
+      "w": 300,
+      "h": 40
+    },
+    {
+      "x": 1000,
+      "y": 1400,
+      "w": 400,
+      "h": 40
+    },
+    {
+      "x": 600,
+      "y": 1300,
+      "w": 40,
+      "h": 200
+    },
+
+    {
+      "x": 1700,
+      "y": 300,
+      "w": 40,
+      "h": 200
+    },
+    {
+      "x": 1500,
+      "y": 300,
+      "w": 40,
+      "h": 200
+    },
+    {
+      "x": 1600,
+      "y": 500,
+      "w": 240,
+      "h": 40
+    }
+  ],
+
+  "enemies": [
+    {
+      "type": "slime",
+      "x": 1200,
+      "y": 600,
+      "hp": 30,
+      "damage": 10,
+      "speed": 90,
+      "aggroRadius": 250,
+      "xp": 10
+    },
+    {
+      "type": "slime",
+      "x": 1500,
+      "y": 1200,
+      "hp": 30,
+      "damage": 10,
+      "speed": 90,
+      "aggroRadius": 250,
+      "xp": 10
+    },
+    {
+      "type": "slime",
+      "x": 800,
+      "y": 1600,
+      "hp": 40,
+      "damage": 12,
+      "speed": 110,
+      "aggroRadius": 280,
+      "xp": 15
+    },
+
+    {
+      "type": "boss",
+      "x": 1600,
+      "y": 900,
+      "hp": 120,
+      "damage": 20,
+      "speed": 130,
+      "aggroRadius": 400,
+      "xp": 100
+    }
+  ],
+
+  "npcs": [
+    {
+      "id": "keeper",
+      "name": "Keeper",
+      "x": 500,
+      "y": 400,
+      "lines": [
+        "The lighthouse went dark three nights ago.",
+        "Three sparks fell from its lamp when it happened.",
+        "Find them, and I will tell you what I saw."
+      ]
+    }
+  ],
+
+  "pickups": [
+    {
+      "id": "spark1",
+      "kind": "spark",
+      "x": 1100,
+      "y": 400
+    },
+    {
+      "id": "spark2",
+      "kind": "spark",
+      "x": 1700,
+      "y": 1500
+    },
+    {
+      "id": "spark3",
+      "kind": "spark",
+      "x": 400,
+      "y": 1700
+    }
+  ],
+
+  "lighthouse": {
+    "x": 1600,
+    "y": 180
+  }
+}
