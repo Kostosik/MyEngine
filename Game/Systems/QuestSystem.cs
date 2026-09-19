@@ -1,9 +1,9 @@
-﻿using MyEngine.Game.Components;
-using MyEngine.Components;
+﻿using MyEngine.Components;
 using MyEngine.Ecs;
 using System.Numerics;
+using TestRPGGame.Components;
 
-namespace MyEngine.Game.Systems;
+namespace TestRPGGame.Systems;
 
 public sealed class QuestSystem
 {
@@ -21,7 +21,7 @@ public sealed class QuestSystem
     public string[] GetDialogueLines(Interactable npc, Entity npcEntity, Vector2 npcPosition)
     {
         var dialogue = npcEntity.Get<DialogueData>();
-        var defaultLines = dialogue?.Lines ?? System.Array.Empty<string>();
+        var defaultLines = dialogue?.Lines ?? Array.Empty<string>();
 
         if (npc.Id != "keeper")
             return defaultLines;

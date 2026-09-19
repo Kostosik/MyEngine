@@ -1,7 +1,7 @@
 ﻿using ImGuiNET;
 using System.Numerics;
 
-namespace MyEngine.Game.UI;
+namespace TestRPGGame.UI;
 
 public sealed class GameOverScreen
 {

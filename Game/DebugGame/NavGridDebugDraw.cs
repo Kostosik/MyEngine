@@ -1,12 +1,12 @@
 ﻿using ImGuiNET;
 using MyEngine.Ai;
 using MyEngine.Ecs;
-using MyEngine.Game.Ai;
 using MyEngine.Components;
 using MyEngine.Rendering;
 using System.Numerics;
+using TestRPGGame.Ai;
 
-namespace MyEngine.Game.Debug;
+namespace TestRPGGame.DebugGame;
 
 public static class NavGridDebugDraw
 {

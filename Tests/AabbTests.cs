@@ -1,7 +1,7 @@
 ﻿using MyEngine.Math;
 using System.Numerics;
 
-namespace MyEngine.Tests;
+namespace Tests;
 
 public class AabbTests
 {

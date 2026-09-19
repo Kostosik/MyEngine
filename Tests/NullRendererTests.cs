@@ -4,7 +4,7 @@ using MyEngine.Rendering.RHI;
 using MyEngine.Rendering.RHI.Null;
 using System.Numerics;
 
-namespace MyEngine.Tests;
+namespace Tests;
 
 public class NullRendererTests
 {

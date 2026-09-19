@@ -1,6 +1,6 @@
 ﻿using MyEngine.Items;
 
-namespace MyEngine.Tests;
+namespace Tests;
 
 public class InventoryTests
 {

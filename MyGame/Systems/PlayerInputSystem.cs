@@ -4,7 +4,7 @@ using MyEngine.Ecs;
 using MyEngine.InputEngine;
 using System.Numerics;
 
-namespace FactoryGame.Systems;
+namespace MyGame.Systems;
 
 /// <summary>
 /// Читает ввод игрока и пишет в TopDownController.

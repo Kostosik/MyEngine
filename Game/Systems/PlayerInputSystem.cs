@@ -1,9 +1,11 @@
-﻿using MyEngine.Components;
+﻿using MyEngine;
+using MyEngine.Components;
 using MyEngine.Ecs;
 using MyEngine.InputEngine;
 using System.Numerics;
+using TestRPGGame;
 
-namespace MyEngine.Game.Systems;
+namespace TestRPGGame.Systems;
 
 /// <summary>
 /// Читает ввод игрока и записывает вектор движения в TopDownController.

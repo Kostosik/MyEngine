@@ -3,7 +3,7 @@ using MyEngine.Ecs;
 using MyEngine.Ticking;
 using MyEngine.WorldEngine;
 
-namespace MyEngine.Tests;
+namespace Tests;
 
 public class TickSchedulerTests
 {

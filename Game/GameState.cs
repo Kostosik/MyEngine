@@ -1,4 +1,4 @@
-﻿namespace MyEngine.Game;
+﻿namespace TestRPGGame;
 
 public enum GamePhase { Playing, Dead, Victory }
 

@@ -1,6 +1,6 @@
 ﻿using MyEngine.Memory;
 
-namespace MyEngine.Tests;
+namespace Tests;
 
 public class ArenaTests
 {

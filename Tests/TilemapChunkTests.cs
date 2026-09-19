@@ -1,6 +1,6 @@
 ﻿using MyEngine.Tilemap;
 
-namespace MyEngine.Tests;
+namespace Tests;
 
 public class TilemapChunkTests
 {

@@ -2,7 +2,7 @@
 using MyEngine.Ecs;
 using MyEngine.Components;
 
-namespace MyEngine.Game.Systems;
+namespace TestRPGGame.Systems;
 
 public sealed class ProgressionSystem : ISystem
 {

@@ -1,7 +1,7 @@
 ﻿using MyEngine.GameFlow;
 using MyEngine.InputEngine;
 
-namespace MyEngine.Game.States;
+namespace TestRPGGame.States;
 
 public sealed class VictoryState : GameStateBase
 {

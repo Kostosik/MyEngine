@@ -7,7 +7,7 @@ using MyEngine.Game.Components;
 using MyEngine.Physics;
 using System.Numerics;
 
-namespace MyEngine.Game.Spawning;
+namespace TestRPGGame.Spawning;
 
 public static class EntityFactory
 {

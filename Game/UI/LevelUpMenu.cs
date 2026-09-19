@@ -3,7 +3,7 @@ using MyEngine.Ecs;
 using MyEngine.Components;
 using System.Numerics;
 
-namespace MyEngine.Game.UI;
+namespace TestRPGGame.UI;
 
 public sealed class LevelUpMenu
 {

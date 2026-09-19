@@ -3,7 +3,7 @@ using MyEngine.Ecs;
 using MyEngine.Physics;
 using System.Numerics;
 
-namespace MyEngine.Tests;
+namespace Tests;
 
 public class RaycastTests
 {

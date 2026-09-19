@@ -3,7 +3,7 @@ using MyEngine.Ecs;
 using MyEngine.Systems;
 using System.Numerics;
 
-namespace MyEngine.Tests;
+namespace Tests;
 
 public class TransformHierarchyTests
 {

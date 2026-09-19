@@ -2,7 +2,7 @@
 using MyEngine.Components;
 using MyEngine.Ecs;
 
-namespace MyEngine.Game;
+namespace TestRPGGame;
 
 /// <summary>
 /// Прогон игровой логики без окна. Для тестов и балансировки.
@@ -21,7 +21,7 @@ public sealed class HeadlessGameRunner : HeadlessApplication
             var e = _world.Create();
             e.Add(new Transform { Position = new System.Numerics.Vector2(i * 10, 0) });
             e.Add(new Velocity());
-            e.Add(new MyEngine.Components.Health { Hp = 100, MaxHp = 100 });
+            e.Add(new Health { Hp = 100, MaxHp = 100 });
         }
     }
 

@@ -1,4 +1,4 @@
-﻿namespace MyEngine.Game.Ai;
+﻿namespace TestRPGGame.Ai;
 
 public enum EnemyState
 {

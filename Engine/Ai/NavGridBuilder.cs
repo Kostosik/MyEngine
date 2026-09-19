@@ -1,10 +1,9 @@
-﻿using MyEngine.Ai;
-using MyEngine.Components;
+﻿using MyEngine.Components;
 using MyEngine.Math;
 using System.Numerics;
 using MyEngine.Ecs;
 
-namespace MyEngine.Game.Spawning;
+namespace MyEngine.Ai;
 
 public static class NavGridBuilder
 {

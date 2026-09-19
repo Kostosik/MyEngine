@@ -1,6 +1,4 @@
-﻿using MyEngine.Ai.BehaviorTree;
-
-namespace MyEngine.BehaviorTree;
+﻿namespace MyEngine.Ai.BehaviorTree;
 
 /// <summary>Инвертирует результат ребёнка. Success ↔ Failure. Running не меняется.</summary>
 public sealed class Inverter : Decorator

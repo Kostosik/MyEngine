@@ -1,6 +1,6 @@
 ﻿using MyEngine.Diagnostics;
 
-namespace MyEngine.Tests;
+namespace Tests;
 
 public class GuardTests
 {

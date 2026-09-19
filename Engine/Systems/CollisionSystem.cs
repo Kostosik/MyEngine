@@ -1,7 +1,7 @@
 ﻿using MyEngine.Components;
 using MyEngine.Ecs;
 using MyEngine.Math;
-using MyEngine.Spatial;
+using MyEngine.Spartial;
 using System.Numerics;
 
 namespace MyEngine.Systems;

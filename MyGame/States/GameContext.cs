@@ -5,7 +5,7 @@ using MyEngine.Events;
 using MyEngine.Rendering;
 using MyEngine;
 
-namespace FactoryGame.States;
+namespace MyGame.States;
 
 public sealed class GameContext
 {

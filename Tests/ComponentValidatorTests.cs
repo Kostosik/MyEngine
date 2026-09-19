@@ -1,6 +1,6 @@
 ﻿using MyEngine.Diagnostics.Validation;
 
-namespace MyEngine.Tests;
+namespace Tests;
 
 public class ComponentValidatorTests
 {

@@ -3,7 +3,7 @@ using MyEngine.Components;
 using System.Numerics;
 using MyEngine.Ecs;
 
-namespace FactoryGame.Debug;
+namespace MyGame.DebugGame;
 
 public sealed class GameDebugOverlay
 {
@@ -42,7 +42,7 @@ public sealed class GameDebugOverlay
             var t = e.Get<Transform>()!;
 
             // Пропускаем сущности без спрайта — обычно это невидимые маркеры
-            if (!e.Has<MyEngine.Components.Sprite>()) continue;
+            if (!e.Has<Sprite>()) continue;
 
             _dd.WorldText(
                 t.Position + new Vector2(0, -34),   // выше центра сущности

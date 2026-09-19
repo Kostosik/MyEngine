@@ -1,10 +1,10 @@
 ﻿using MyEngine.Ai;
 using MyEngine.Ecs;
-using MyEngine.Game.Data;
 using System.Numerics;
 using System.Text.Json;
+using TestRPGGame.Data;
 
-namespace MyEngine.Game.Spawning;
+namespace TestRPGGame.Spawning;
 
 public static class MapLoader
 {

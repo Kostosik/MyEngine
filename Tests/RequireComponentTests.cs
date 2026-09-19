@@ -1,6 +1,6 @@
 ﻿using MyEngine.Ecs;
 
-namespace MyEngine.Tests;
+namespace Tests;
 
 public class RequireComponentTests
 {

@@ -2,7 +2,7 @@
 using MyEngine.UI.Widgets;
 using System.Numerics;
 
-namespace MyEngine.Tests;
+namespace Tests;
 
 public class GridPanelTests
 {

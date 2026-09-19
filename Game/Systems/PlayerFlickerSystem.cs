@@ -2,7 +2,7 @@
 using MyEngine.Ecs;
 using MyEngine.Game.Components;
 
-namespace MyEngine.Game.Systems;
+namespace TestRPGGame.Systems;
 
 /// <summary>
 /// Мигание игрока при неуязвимости (i-frames).
@@ -24,7 +24,7 @@ public sealed class PlayerFlickerSystem : ISystem
             if (hp.InvulnTimer > 0)
             {
                 // Мигаем: 10 герц
-                bool visible = ((int)(hp.InvulnTimer * 20)) % 2 == 0;
+                bool visible = (int)(hp.InvulnTimer * 20) % 2 == 0;
                 sprite.Enabled = visible;
             }
             else

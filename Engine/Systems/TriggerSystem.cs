@@ -3,7 +3,7 @@ using MyEngine.Ecs;
 using MyEngine.Events;
 using MyEngine.Math;
 using MyEngine.Physics;
-using MyEngine.Spatial;
+using MyEngine.Spartial;
 using System.Numerics;
 
 namespace MyEngine.Systems;

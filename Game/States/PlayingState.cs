@@ -4,7 +4,7 @@ using MyEngine.GameFlow;
 using MyEngine.InputEngine;
 using MyEngine.Time;
 
-namespace MyEngine.Game.States;
+namespace TestRPGGame.States;
 
 public sealed class PlayingState : GameStateBase
 {

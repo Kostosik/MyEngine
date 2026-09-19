@@ -9,7 +9,7 @@ using MyEngine.Systems;
 using System.Numerics;
 using MyEngine.Assets;
 
-namespace FactoryGame;
+namespace MyGame;
 
 /// <summary>
 /// Главный класс игры. Наследуется от GameSession — каркас
@@ -164,16 +164,16 @@ public sealed class FactoryGameApp : GameSession
     {
         var e = world.Create();
         e.Add(new PlayerTag());
-        e.Add(new MyEngine.Components.Transform { Position = position });
+        e.Add(new Transform { Position = position });
         e.Add(new Velocity());
-        e.Add(new MyEngine.Components.Collider
+        e.Add(new Collider
         {
             Size = new Vector2(24, 24),
             IsStatic = false,
             Layer = MyEngine.Physics.Layer.Player,
             CollidesWith = MyEngine.Physics.Layer.Wall
         });
-        e.Add(new MyEngine.Components.Sprite
+        e.Add(new Sprite
         {
             Size = new Vector2(24, 24),
             Color = new Vector4(0.3f, 0.8f, 0.4f, 1f)

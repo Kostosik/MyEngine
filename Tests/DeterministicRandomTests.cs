@@ -1,6 +1,6 @@
 ﻿using MyEngine.Utility;
 
-namespace MyEngine.Tests;
+namespace Tests;
 
 public class DeterministicRandomTests
 {

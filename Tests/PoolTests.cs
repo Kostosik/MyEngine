@@ -1,6 +1,6 @@
 ﻿using MyEngine.Pooling;
 
-namespace MyEngine.Tests;
+namespace Tests;
 
 public class PoolTests
 {

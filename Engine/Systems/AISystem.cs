@@ -1,6 +1,6 @@
 ﻿using MyEngine.Ecs;
 
-namespace MyEngine.Game.Systems;
+namespace MyEngine.Systems;
 
 public sealed class AISystem : ISystem
 {

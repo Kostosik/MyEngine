@@ -1,7 +1,7 @@
 ﻿using MyEngine.Math;
 using System.Numerics;
 
-namespace MyEngine.Spatial;
+namespace MyEngine.Spartial;
 
 /// <summary>
 /// Раскладка AABB-объектов по сетке клеток фиксированного размера.

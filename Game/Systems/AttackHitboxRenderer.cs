@@ -4,7 +4,7 @@ using MyEngine.Game.Components;
 using MyEngine.Rendering;
 using System.Numerics;
 
-namespace MyEngine.Game.Systems;
+namespace TestRPGGame.Systems;
 
 /// <summary>
 /// Рисует хитбокс игрока при ударе. Вызывается в Render после SpriteRenderSystem.

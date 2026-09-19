@@ -1,7 +1,7 @@
 ﻿using MyEngine.Ai;
 using System.Numerics;
 
-namespace MyEngine.Tests;
+namespace Tests;
 
 public class AStarTests
 {

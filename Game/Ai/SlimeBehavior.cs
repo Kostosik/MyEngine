@@ -4,7 +4,7 @@ using MyEngine.Components;
 using MyEngine.Game.Components;
 using System.Numerics;
 
-namespace MyEngine.Game.Ai;
+namespace TestRPGGame.Ai;
 
 public sealed class SlimeBehavior : IBehavior
 {

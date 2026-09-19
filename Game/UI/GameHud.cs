@@ -6,7 +6,7 @@ using MyEngine.UI.Widgets;
 using System.Drawing;
 using System.Numerics;
 
-namespace MyEngine.Game.UI;
+namespace TestRPGGame.UI;
 
 /// <summary>
 /// Игровой HUD: HP-бар, XP-бар, уровень, искры, очки навыков.

@@ -1,11 +1,11 @@
 ﻿using MyEngine.Diagnostics;
 using MyEngine.Ecs;
-using MyEngine.Game.Systems;
-using MyEngine.Game.UI;
 using MyEngine.GameFlow;
 using MyEngine.UI;
+using TestRPGGame.Systems;
+using TestRPGGame.UI;
 
-namespace MyEngine.Game.States;
+namespace TestRPGGame.States;
 
 /// <summary>
 /// Игровой контекст. Наследник движкового — общие поля (App, World,

@@ -1,12 +1,12 @@
 ﻿using MyEngine.Ai;
 using MyEngine.Assets;
 using MyEngine.Ecs;
-using MyEngine.Game.Data;
 using MyEngine.Threading;
 using System.Numerics;
 using System.Text.Json;
+using TestRPGGame.Data;
 
-namespace MyEngine.Game.Spawning;
+namespace TestRPGGame.Spawning;
 
 public sealed class AsyncMapLoader
 {

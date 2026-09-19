@@ -1,7 +1,8 @@
-﻿using MyEngine.Ecs;
+﻿using MyEngine;
+using MyEngine.Ecs;
 using MyEngine.Scenes;
 
-namespace MyEngine.Tests;
+namespace Tests;
 
 public class SceneTests
 {

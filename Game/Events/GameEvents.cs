@@ -2,7 +2,7 @@
 using MyEngine.Components;
 using System.Numerics;
 
-namespace MyEngine.Game.Events;
+namespace TestRPGGame.Events;
 
 public sealed class EnemyKilledEvent
 {

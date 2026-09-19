@@ -1,7 +1,7 @@
 ﻿using MyEngine.GameFlow;
-using MyEngine.Game.Spawning;
+using TestRPGGame.Spawning;
 
-namespace MyEngine.Game.States;
+namespace TestRPGGame.States;
 
 public sealed class LoadingState : GameStateBase
 {

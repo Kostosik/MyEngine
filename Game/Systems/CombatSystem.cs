@@ -1,4 +1,5 @@
-﻿using MyEngine.Components;
+﻿using MyEngine;
+using MyEngine.Components;
 using MyEngine.Diagnostics;
 using MyEngine.Ecs;
 using MyEngine.Events;
@@ -8,7 +9,7 @@ using MyEngine.InputEngine;
 using MyEngine.Time;
 using System.Numerics;
 
-namespace MyEngine.Game.Systems;
+namespace TestRPGGame.Systems;
 
 public sealed class CombatSystem : ISystem
 {

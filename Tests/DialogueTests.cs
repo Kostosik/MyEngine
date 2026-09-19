@@ -1,6 +1,6 @@
 ﻿using MyEngine.Dialogue;
 
-namespace MyEngine.Tests;
+namespace Tests;
 
 public class DialogueTests
 {

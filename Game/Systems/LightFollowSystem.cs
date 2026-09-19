@@ -1,7 +1,7 @@
 ﻿using MyEngine.Components;
 using MyEngine.Ecs;
 
-namespace MyEngine.Game.Systems;
+namespace TestRPGGame.Systems;
 
 /// <summary>Свет, следующий за игроком.</summary>
 public sealed class LightFollowSystem : ISystem

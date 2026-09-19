@@ -1,7 +1,7 @@
 ﻿using MyEngine.Ecs;
 using MyEngine.Events;
 
-namespace MyEngine.Tests;
+namespace Tests;
 
 public class EntityLifecycleTests
 {

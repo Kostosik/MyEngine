@@ -1,4 +1,4 @@
-﻿namespace MyEngine.Game.Data;
+﻿namespace TestRPGGame.Data;
 
 public sealed class MapData
 {

@@ -4,7 +4,7 @@ using MyEngine.Game.Components;
 using MyEngine.Rendering.Effects;
 using System.Numerics;
 
-namespace MyEngine.Game.Systems;
+namespace TestRPGGame.Systems;
 
 /// <summary>
 /// Вспышка белым при получении урона. Меняет Sprite.Color

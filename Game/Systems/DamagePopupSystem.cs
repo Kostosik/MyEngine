@@ -3,7 +3,7 @@ using MyEngine.Ecs;
 using MyEngine.Rendering;
 using System.Numerics;
 
-namespace MyEngine.Game.Systems;
+namespace TestRPGGame.Systems;
 
 public sealed class DamagePopupSystem
 {

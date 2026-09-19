@@ -1,6 +1,4 @@
-﻿using MyEngine.Diagnostics;
-
-namespace MyEngine;
+﻿namespace MyEngine.Diagnostics;
 
 /// <summary>
 /// Парсер командной строки. Хранит флаги (--fullscreen) и пары
@@ -21,7 +19,7 @@ public static class CommandLine
     private static readonly HashSet<string> _flags = new();
 
     /// <summary>Сырой массив аргументов (для отладки).</summary>
-    public static IReadOnlyList<string> RawArgs { get; private set; } = System.Array.Empty<string>();
+    public static IReadOnlyList<string> RawArgs { get; private set; } = Array.Empty<string>();
 
     public static void Initialize(string[] args)
     {

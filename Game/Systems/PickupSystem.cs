@@ -1,9 +1,9 @@
 ﻿using MyEngine.Ecs;
-using MyEngine.Game.Components;
 using MyEngine.Components;
 using System.Numerics;
+using TestRPGGame.Components;
 
-namespace MyEngine.Game.Systems;
+namespace TestRPGGame.Systems;
 
 public sealed class PickupSystem : ISystem
 {

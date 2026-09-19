@@ -1,7 +1,7 @@
 ﻿using MyEngine.GameFlow;
 using Silk.NET.Input;
 
-namespace MyEngine.Game.States;
+namespace TestRPGGame.States;
 
 public sealed class DialogueState : GameStateBase
 {

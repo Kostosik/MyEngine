@@ -1,6 +1,6 @@
 ﻿using MyEngine.Threading;
 
-namespace MyEngine.Tests;
+namespace Tests;
 
 public class JobSystemTests
 {

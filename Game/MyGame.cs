@@ -7,14 +7,7 @@ using MyEngine.Dialogue;
 using MyEngine.Ecs;
 using MyEngine.Effects;
 using MyEngine.Events;
-using MyEngine.Game.Components;
-using MyEngine.Game.Debug;
-using MyEngine.Game.Effects;
-using MyEngine.Game.Events;
-using MyEngine.Game.Spawning;
-using MyEngine.Game.States;
 using MyEngine.Game.Systems;
-using MyEngine.Game.UI;
 using MyEngine.GameFlow;
 using MyEngine.InputEngine;
 using MyEngine.Math;
@@ -25,8 +18,16 @@ using MyEngine.Time;
 using MyEngine.UI;
 using Silk.NET.OpenGL;
 using System.Numerics;
+using TestRPGGame.Components;
+using TestRPGGame.DebugGame;
+using TestRPGGame.Effects;
+using TestRPGGame.Events;
+using TestRPGGame.Spawning;
+using TestRPGGame.States;
+using TestRPGGame.Systems;
+using TestRPGGame.UI;
 
-namespace MyEngine.Game;
+namespace TestRPGGame;
 
 public sealed class MyGame : GameSession
 {
@@ -42,11 +43,11 @@ public sealed class MyGame : GameSession
     private LightmapRenderer _lightmapRenderer = null!;
     private RenderTarget _lightmapRT = null!;
     private LightingPass _lightingPass = null!;
-    protected override MyEngine.Game.States.GameContext CreateContext()
+    protected override States.GameContext CreateContext()
     => new MyEngine.Game.States.GameContext();
 
-    private new MyEngine.Game.States.GameContext Context
-         => (MyEngine.Game.States.GameContext)base.Context;
+    private new States.GameContext Context
+         => (States.GameContext)base.Context;
 
     private bool _statesRegistered;
     private bool _consoleRegistered;
@@ -244,7 +245,7 @@ public sealed class MyGame : GameSession
         StateMachine.SetInitial("Playing");
 
         // Логи
-        Log.Info("World", MyEngine.Diagnostics.WorldInspector.Report(World));
+        Log.Info("World", WorldInspector.Report(World));
         GameDiagnostics.LogInteractables(World);
         GameDiagnostics.LogPickups(World);
     }

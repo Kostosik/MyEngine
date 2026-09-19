@@ -1,4 +1,4 @@
-﻿namespace MyEngine.Game.Components;
+﻿namespace TestRPGGame.Components;
 
 public sealed class Pickup
 {

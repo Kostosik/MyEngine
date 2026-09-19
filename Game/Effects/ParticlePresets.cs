@@ -1,7 +1,7 @@
 ﻿using MyEngine.Effects;
 using System.Numerics;
 
-namespace MyEngine.Game.Effects;
+namespace TestRPGGame.Effects;
 
 /// <summary>
 /// Предустановленные эмиттеры для типовых игровых эффектов.

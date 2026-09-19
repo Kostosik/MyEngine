@@ -2,7 +2,7 @@
 using MyEngine.Components;
 using System.Numerics;
 
-namespace MyEngine.Game.Events;
+namespace MyGame.Events;
 
 //####################
 //Потом добавить свое

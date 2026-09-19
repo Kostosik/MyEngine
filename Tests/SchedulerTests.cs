@@ -1,6 +1,6 @@
 ﻿using MyEngine.Timers;
 
-namespace MyEngine.Tests;
+namespace Tests;
 
 public class SchedulerTests
 {
