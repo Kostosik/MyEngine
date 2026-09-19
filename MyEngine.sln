@@ -5,7 +5,7 @@ VisualStudioVersion = 17.14.37216.2
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine.csproj", "{DF7940E9-96E3-44FC-9364-0732FF92F729}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestRPGGame", "Game\TestRPGGame.csproj", "{A2A66B06-E290-442A-911D-A840D23B8D08}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestRPGGame", "TestRPGGame\TestRPGGame.csproj", "{A2A66B06-E290-442A-911D-A840D23B8D08}"
 	ProjectSection(ProjectDependencies) = postProject
 		{DF7940E9-96E3-44FC-9364-0732FF92F729} = {DF7940E9-96E3-44FC-9364-0732FF92F729}
 	EndProjectSection
@@ -22,7 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решен
 		Readme.md = Readme.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactoryGame", "MyGame\FactoryGame.csproj", "{335B5075-E2B8-467C-9A70-D1E92DA029A1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactoryGame", "FactoryGame\FactoryGame.csproj", "{335B5075-E2B8-467C-9A70-D1E92DA029A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

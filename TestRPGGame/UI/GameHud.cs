@@ -1,9 +1,7 @@
 ﻿using MyEngine.Components;
 using MyEngine.Ecs;
-using MyEngine.Game.Components;
 using MyEngine.UI;
 using MyEngine.UI.Widgets;
-using System.Drawing;
 using System.Numerics;
 
 namespace TestRPGGame.UI;

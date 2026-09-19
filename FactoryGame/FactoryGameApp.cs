@@ -9,7 +9,7 @@ using MyEngine.Systems;
 using System.Numerics;
 using MyEngine.Assets;
 
-namespace MyGame;
+namespace FactoryGame;
 
 /// <summary>
 /// Главный класс игры. Наследуется от GameSession — каркас

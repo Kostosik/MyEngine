@@ -1,6 +1,5 @@
 ﻿using MyEngine.Components;
 using MyEngine.Ecs;
-using MyEngine.Game.Components;
 
 namespace TestRPGGame.Systems;
 

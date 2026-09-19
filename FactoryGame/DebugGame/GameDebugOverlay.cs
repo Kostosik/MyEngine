@@ -3,7 +3,7 @@ using MyEngine.Components;
 using System.Numerics;
 using MyEngine.Ecs;
 
-namespace MyGame.DebugGame;
+namespace FactoryGame.DebugGame;
 
 public sealed class GameDebugOverlay
 {

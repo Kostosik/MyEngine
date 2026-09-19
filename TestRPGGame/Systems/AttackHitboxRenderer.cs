@@ -1,6 +1,6 @@
 ﻿using MyEngine.Components;
 using MyEngine.Ecs;
-using MyEngine.Game.Components;
+using TestRPGGame.Components;
 using MyEngine.Rendering;
 using System.Numerics;
 

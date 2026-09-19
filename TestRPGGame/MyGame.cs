@@ -7,7 +7,6 @@ using MyEngine.Dialogue;
 using MyEngine.Ecs;
 using MyEngine.Effects;
 using MyEngine.Events;
-using MyEngine.Game.Systems;
 using MyEngine.GameFlow;
 using MyEngine.InputEngine;
 using MyEngine.Math;
@@ -44,7 +43,7 @@ public sealed class MyGame : GameSession
     private RenderTarget _lightmapRT = null!;
     private LightingPass _lightingPass = null!;
     protected override States.GameContext CreateContext()
-    => new MyEngine.Game.States.GameContext();
+    => new TestRPGGame.States.GameContext();
 
     private new States.GameContext Context
          => (States.GameContext)base.Context;

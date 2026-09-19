@@ -1,5 +1,5 @@
 ﻿using MyEngine.Diagnostics;
-using MyEngine.Game.Components;
+using TestRPGGame.Components;
 using MyEngine.Components;
 using System.Numerics;
 using MyEngine.Ecs;

@@ -1,4 +1,4 @@
-﻿namespace MyGame;
+﻿namespace FactoryGame;
 
 public sealed class GameState
 {

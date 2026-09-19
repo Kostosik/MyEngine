@@ -2,10 +2,10 @@
 using MyEngine.Components;
 using MyEngine.Diagnostics;
 using MyEngine.Ecs;
-using MyEngine.Game.Ai;
-using MyEngine.Game.Components;
 using MyEngine.Physics;
+using TestRPGGame.Ai;
 using System.Numerics;
+using TestRPGGame.Components;
 
 namespace TestRPGGame.Spawning;
 

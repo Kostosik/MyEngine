@@ -4,8 +4,9 @@ using MyEngine.Effects;
 using MyEngine.Events;
 using MyEngine.Rendering;
 using MyEngine;
+using FactoryGame;
 
-namespace MyGame.States;
+namespace FactoryGame.States;
 
 public sealed class GameContext
 {
