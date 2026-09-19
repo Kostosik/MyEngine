@@ -1,7 +1,6 @@
 ﻿using MyEngine.Ai;
 using MyEngine.Ecs;
 using MyEngine.Components;
-using TestRPGGame.Components;
 using System.Numerics;
 
 namespace TestRPGGame.Ai;

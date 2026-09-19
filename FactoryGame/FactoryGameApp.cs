@@ -1,13 +1,20 @@
-﻿using MyEngine;
+﻿using FactoryGame.DebugGame;
+using MyEngine;
+using MyEngine.Ai;
+using MyEngine.Assets;
 using MyEngine.Components;
 using MyEngine.Diagnostics;
-using MyEngine.Effects;
+using MyEngine.Dialogue;
 using MyEngine.Ecs;
+using MyEngine.Effects;
 using MyEngine.GameFlow;
+using MyEngine.InputEngine;
+using MyEngine.Math;
 using MyEngine.Rendering;
+using MyEngine.Serialization.Binary;
 using MyEngine.Systems;
+using MyEngine.UI;
 using System.Numerics;
-using MyEngine.Assets;
 
 namespace FactoryGame;
 
@@ -21,13 +28,36 @@ public sealed class FactoryGameApp : GameSession
     private GameState _state = null!;
     private Entity _player = null!;
     private EntityFactoryRegistry _factories = null!;
+
+    private WorldInspectorWindow _worldInspectorWindow = null!;
+    private EntityInspector _inspector = null!;
+
+    BinaryComponentRegistry _binaryRegistry = null!;
+    BinaryWorldSerializer _binarySerializer = null!;
+
     public FactoryGameApp() : base("Factory Game", 1280, 720) { }
 
     // ============================================================
     // 1. Ресурсы — создаются ОДИН раз при старте приложения
     // ============================================================
 
-    AssetManifest _assetManifest = new AssetManifest();
+    private SpriteRenderSystem _spriteRenderer = null!;
+    private DebugDraw _debugDraw = null!;
+    private GameDebugOverlay _debugOverlay = null!;
+    private RenderTarget _sceneTarget = null!;
+    private PostProcessStack _postProcess = null!;
+    private LightmapRenderer _lightmapRenderer = null!;
+    private RenderTarget _lightmapRT = null!;
+    private LightingPass _lightingPass = null!;
+
+    protected override States.GameContext CreateContext()
+=> new FactoryGame.States.GameContext();
+    private new States.GameContext Context
+     => (States.GameContext)base.Context;
+
+    private bool _statesRegistered;
+    private bool _consoleRegistered;
+    private bool _watchRegistered;
 
     protected override void InitializeResources()
     {
@@ -36,11 +66,7 @@ public sealed class FactoryGameApp : GameSession
         SpriteRenderer = new SpriteRenderSystem(Batch);
 
         // Шрифт
-        
-        //var fontPath = Path.Combine(AppContext.BaseDirectory, "Assets", "Fonts", "main.ttf");
-        //if (File.Exists(fontPath))
-
-            Font = new Font(GL, Assets.PathFont("main.ttf"), 16f);
+        Font = new Font(GL, Assets.PathFont("main.ttf"), 16f);
         // Частицы
         Particles = new ParticleSystem(4096);
 
@@ -49,9 +75,41 @@ public sealed class FactoryGameApp : GameSession
         RegisterFactories();
 
         // Камера — базовые настройки, конкретное следует за игроком позже
-        Camera.DeadzoneSize = new Vector2(100, 80);
+        Camera.DeadzoneSize = new Vector2(80, 60);
+        Camera.LookAheadDistance = new Vector2(60, 0);
+        Camera.LookAheadSmoothing = 4f;
         Camera.FollowSmoothing = 6f;
+        Camera.Bounds = new Aabb(new Vector2(0, 0), new Vector2(2000, 2000));
+
+        _sceneTarget = new RenderTarget(GL, Width, Height);
+        _lightmapRT = new RenderTarget(GL, Width, Height);
+
+        _postProcess = new PostProcessStack(GL, Width, Height);
+        _lightmapRenderer = new LightmapRenderer(GL);
+        _lightingPass = new LightingPass(GL);
+
+        _postProcess.Add(_lightingPass);
+        _postProcess.Add(new BloomPass(GL, threshold: 0.7f, blurRadius: 1.5f, strength: 1.8f));
+        _postProcess.Add(PostProcessPresets.Vignette(GL, intensity: 0.7f));
+
+        UI.Batch = Batch;
+        UI.Font = Font;
+        UI.White = Texture2D.White(GL);
+        UI.Rounded = UIRounded;
+
+        _binaryRegistry = new BinaryComponentRegistry();
+        _binaryRegistry.Register(() => new Transform());
+        _binaryRegistry.Register(() => new Velocity());
+        _binaryRegistry.Register(() => new Collider());
+        _binaryRegistry.Register(() => new Health());
+
+        _binarySerializer = new BinaryWorldSerializer(_binaryRegistry);
+
+        RegisterConsoleCommands();
+        RegisterWatchValues();
     }
+
+
 
     // ============================================================
     // 2. Старт сессии — при каждом рестарте. Создать мир, state
@@ -59,6 +117,13 @@ public sealed class FactoryGameApp : GameSession
 
     protected override void StartSession()
     {
+        // Связать scheduler и профайлер — один раз
+        Context.UpdateSystems = UpdateSystems;
+        Context.VariableSystems = VariableSystems;
+        Context.Profiler = Profiler;
+        Context.Restart = BeginNewSession;
+        Context.FinishLoading = CompleteSession;
+
         // Мир и состояние
         _state = new GameState();
         World.SetSingleton(_state);
@@ -71,6 +136,19 @@ public sealed class FactoryGameApp : GameSession
         Context.Events = Events;
         Context.Particles = Particles;
         Context.Font = Font;
+
+        RegisterStates();
+    }
+
+    private void RegisterStates()
+    {
+        if (_statesRegistered) return;
+        _statesRegistered = true;
+        // Регистрируем только игровые фазы.
+        //StateMachine.Register("Playing", new PlayingState(Context));
+        //StateMachine.Register("Dialogue", new DialogueState(Context));
+        //StateMachine.Register("Dead", new DeadState(Context));
+        //StateMachine.Register("Victory", new VictoryState(Context));
     }
 
     // ============================================================
@@ -91,16 +169,22 @@ public sealed class FactoryGameApp : GameSession
     {
         _player = _factories.Spawn(World, "player", new Vector2(500, 500));
         // Универсальные системы — из движка
-        UpdateSystems.Add(new MovementSystem(Jobs));
-        UpdateSystems.Add(new TopDownControllerSystem());
 
-        // Игровая система — из FactoryGame
-        VariableSystems.Add(new FactoryGame.Systems.PlayerInputSystem(this, _player));
 
         var t = _player.Get<Transform>()!;
         Camera.Position = t.Position;
 
-        RegisterConsoleCommands();
+        RegisterGameSystems();
+
+        // Инспектор — пересоздаём на новый мир
+        _inspector = new EntityInspector(World, Camera, () => Width, () => Height);
+        Context.Player = _player;
+
+        RegisterEventSubscriptions();
+
+        _state.IsLoading = false;
+
+        Log.Info("World", WorldInspector.Report(World));
     }
 
     // ============================================================
@@ -132,6 +216,21 @@ public sealed class FactoryGameApp : GameSession
             Camera.ApplyBounds(Width, Height);
             Camera.UpdateShake(dt);
         }
+
+#if DEBUG
+        if (DebugConfig.Available)
+        {
+            // F10 — Entity Inspector (окно инспектора сущностей)
+            if (Input.ConsumeDebugPressed(DebugAction.ToggleEntityInspector))
+                _inspector.Visible = !_inspector.Visible;
+
+            if (!UI.IsMouseOver(Input.MousePosition)
+    && Input.ConsumeMousePressed(Silk.NET.Input.MouseButton.Right))
+            {
+                _inspector.PickAt(Input.MousePosition);
+            }
+        }
+#endif
     }
 
     protected override void Render()
@@ -160,6 +259,20 @@ public sealed class FactoryGameApp : GameSession
         _factories.Register("player", (w, pos) => CreatePlayer(w, pos));
     }
 
+    private void RegisterGameSystems()
+    {
+        Context.VariableSystems.Add(new MovementSystem(Jobs));
+        Context.VariableSystems.Add(new TopDownControllerSystem());
+
+        // Игровая система — из FactoryGame
+        Context.VariableSystems.Add(new FactoryGame.Systems.PlayerInputSystem(this, _player));
+    }
+
+    private void RegisterEventSubscriptions()
+    {
+
+    }
+
     private Entity CreatePlayer(World world, Vector2 position)
     {
         var e = world.Create();
@@ -182,7 +295,10 @@ public sealed class FactoryGameApp : GameSession
         return e;
     }
 
-    private bool _consoleRegistered;
+    private void RegisterWatchValues()
+    {
+
+    }
 
     private void RegisterConsoleCommands()
     {

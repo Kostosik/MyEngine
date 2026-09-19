@@ -1,28 +1,30 @@
 ﻿using MyEngine.Diagnostics;
 using MyEngine.Ecs;
-using MyEngine.Effects;
-using MyEngine.Events;
-using MyEngine.Rendering;
-using MyEngine;
-using FactoryGame;
+using MyEngine.UI;
 
 namespace FactoryGame.States;
 
-public sealed class GameContext
+/// <summary>
+/// Игровой контекст. Наследник движкового — общие поля (App, World,
+/// Camera, Events, Particles, Font) в базовом классе, здесь только
+/// специфика LighthouseKeeper.
+/// </summary>
+public sealed class GameContext : MyEngine.GameFlow.GameContext
 {
-    public Application App = null!;
-    public World World = null!;
+    // Игровое состояние
     public GameState State = null!;
     public Entity Player = null!;
-    public EventBus Events = null!;
 
-    public SystemScheduler UpdateSystems = new();
-    public SystemScheduler VariableSystems = new();
+    // Системы (для игры — не для движка)
+    public SystemScheduler UpdateSystems = null!;
+    public SystemScheduler VariableSystems = null!;
 
-    public ParticleSystem Particles = null!;
-    public Camera2D Camera = null!;
-    public Font Font = null!;
 
+
+    // UI
+
+
+    // Прочее
     public Profiler Profiler = null!;
     public WorldInspectorWindow WorldInspector = null!;
 
