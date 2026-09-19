@@ -9,8 +9,5 @@
   },
   "maps": {
     "island": "Maps/island.json"
-  },
-  "data": {
-    "enemies": "Data/enemies.json"
   }
 }

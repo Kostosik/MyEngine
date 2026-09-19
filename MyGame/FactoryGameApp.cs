@@ -7,6 +7,7 @@ using MyEngine.GameFlow;
 using MyEngine.Rendering;
 using MyEngine.Systems;
 using System.Numerics;
+using MyEngine.Assets;
 
 namespace FactoryGame;
 
@@ -26,6 +27,8 @@ public sealed class FactoryGameApp : GameSession
     // 1. Ресурсы — создаются ОДИН раз при старте приложения
     // ============================================================
 
+    AssetManifest _assetManifest = new AssetManifest();
+
     protected override void InitializeResources()
     {
         // GPU-ресурсы
@@ -33,10 +36,11 @@ public sealed class FactoryGameApp : GameSession
         SpriteRenderer = new SpriteRenderSystem(Batch);
 
         // Шрифт
-        var fontPath = Path.Combine(AppContext.BaseDirectory, "Assets", "Fonts", "main.ttf");
-        if (File.Exists(fontPath))
-            Font = new Font(GL, fontPath, 16f);
+        
+        //var fontPath = Path.Combine(AppContext.BaseDirectory, "Assets", "Fonts", "main.ttf");
+        //if (File.Exists(fontPath))
 
+            Font = new Font(GL, Assets.PathFont("main.ttf"), 16f);
         // Частицы
         Particles = new ParticleSystem(4096);
 

@@ -54,9 +54,7 @@ public sealed class AssetManifest
                 PropertyNameCaseInsensitive = true
             }) ?? new AssetManifestData();
 
-            RootPath = Path.Combine(
-                Path.GetDirectoryName(manifestPath) ?? "",
-                data.Root);
+            RootPath = Path.GetFullPath(data.Root);
 
             Fill(_textures, data.Textures);
             Fill(_fonts, data.Fonts);
@@ -95,7 +93,19 @@ public sealed class AssetManifest
     private string Resolve(Dictionary<string, string> table, string name, string fallbackFolder)
     {
         if (table.TryGetValue(name, out var relative))
+        {
             return Path.GetFullPath(Path.Combine(RootPath, relative));
+        }
+
+        foreach (var kv in table)
+        {
+            var fileName = Path.GetFileName(kv.Value);
+            if (string.Equals(fileName, name, StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(Path.GetFileNameWithoutExtension(fileName), name, StringComparison.OrdinalIgnoreCase))
+            {
+                return Path.GetFullPath(Path.Combine(RootPath, kv.Value));
+            }
+        }
 
         Log.Warn("Assets", $"Asset '{name}' not found in manifest. Fallback used.");
         return Path.GetFullPath(Path.Combine(RootPath, fallbackFolder, name));

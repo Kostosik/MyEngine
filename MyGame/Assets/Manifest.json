@@ -1,0 +1,9 @@
+{
+  "root": "Assets",
+  "textures": {
+    "player": "Textures/player_walk.png"
+  },
+  "fonts": {
+    "main0": "Fonts/main.ttf"
+  }
+}

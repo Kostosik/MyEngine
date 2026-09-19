@@ -87,8 +87,8 @@ public sealed class MyGame : GameSession
         _debugDraw = new DebugDraw(Camera);
         _debugOverlay = new GameDebugOverlay(_debugDraw);
 
-        var fontPath = Path.Combine(AppContext.BaseDirectory, "Assets", "Fonts", "main.ttf");
-        Font = new Font(GL, fontPath, 20f);
+        //var fontPath = Path.Combine(AppContext.BaseDirectory, "Assets", "Fonts", "main.ttf");
+        Font = new Font(GL, Assets.PathFont("main.ttf"), 20f);
 
         Particles = new ParticleSystem(capacity: 4096);
 
