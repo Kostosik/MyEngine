@@ -1,4 +1,5 @@
-﻿using Silk.NET.OpenGL;
+﻿using MyEngine.Diagnostics;
+using Silk.NET.OpenGL;
 using System.Numerics;
 using System.Runtime.InteropServices;
 
@@ -194,6 +195,8 @@ void main() {
         Vector4 colorTop, Vector4 colorBottom,
         float radius = 0f)
     {
+        if (size.X <= 0f || size.Y <= 0f)
+            return;
         if (_rectCount >= MaxRects) Flush();
 
         // Ограничиваем радиус половиной меньшей стороны

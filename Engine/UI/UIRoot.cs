@@ -22,6 +22,23 @@ public sealed class UIRoot
         }
     }
 
+    public UIRoundedRenderer Rounded
+    {
+        get => _ctx.Rounded;
+        set => _ctx.Rounded = value;
+    }
+
+    public void DrawBackground()
+    {
+        foreach (var s in _screens)
+            s.DrawBackground(_ctx);
+    }
+
+    public void DrawForeground()
+    {
+        foreach (var s in _screens)
+            s.DrawForeground(_ctx);
+    }
     public Texture2D White
     {
         get => _ctx.White;
@@ -58,11 +75,6 @@ public sealed class UIRoot
         }
     }
 
-    public void Draw()
-    {
-        foreach (var screen in _screens)
-            screen.Draw(_ctx);
-    }
 
     /// <summary>Возвращает true, если курсор над каким-то UI-элементом — блокирует игровой ввод.</summary>
     public bool IsMouseOver(Vector2 mousePos)

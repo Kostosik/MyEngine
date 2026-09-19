@@ -14,4 +14,5 @@ public sealed class UIRenderContext
     public int ScreenWidth;
     public int ScreenHeight;
     public Texture2D White = null!;
+    public UIRoundedRenderer Rounded = null!;
 }

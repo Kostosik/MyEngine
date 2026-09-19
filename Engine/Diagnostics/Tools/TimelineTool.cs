@@ -15,7 +15,7 @@ public sealed class TimelineTool : IDebugTool
 
     public void ProcessHotkeys(Input input)
     {
-        if (input.ConsumePressed(Key.F4))
+        if (input.ConsumeDebugPressed(DebugAction.ToggleTimeline))
             _window.Visible = !_window.Visible;
     }
 

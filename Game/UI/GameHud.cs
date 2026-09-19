@@ -34,7 +34,8 @@ public sealed class GameHud : Panel
         Anchor = Anchor.TopLeft;
         Offset = new Vector2(16, 16);
         Size = new Vector2(360, 130);
-        BackgroundColor = new Vector4(0.06f, 0.07f, 0.10f, 0.82f);
+        BackgroundTop = new Vector4(0.06f, 0.07f, 0.10f, 0.82f);
+        BackgroundBottom = new Vector4(0.06f, 0.07f, 0.10f, 0.82f);
         BorderColor = new Vector4(0.35f, 0.40f, 0.50f, 0.9f);
         BorderThickness = 2f;
 
@@ -63,7 +64,8 @@ public sealed class GameHud : Panel
             Size = new Vector2(336, 24),
             Value = 1f,
             BackgroundColor = new Vector4(0.10f, 0.05f, 0.05f, 0.9f),
-            FillColor = new Vector4(0.85f, 0.25f, 0.25f, 1f),
+            FillTop = new Vector4(0.85f, 0.25f, 0.25f, 1f),
+            FillBottom= new Vector4(0.85f, 0.25f, 0.25f, 1f),
             BorderColor = new Vector4(0f, 0f, 0f, 0.9f),
             BorderThickness = 2f
         });
@@ -87,7 +89,8 @@ public sealed class GameHud : Panel
             Size = new Vector2(336, 16),
             Value = 0f,
             BackgroundColor = new Vector4(0.05f, 0.05f, 0.10f, 0.9f),
-            FillColor = new Vector4(0.30f, 0.65f, 0.95f, 1f),
+            FillTop = new Vector4(0.85f, 0.25f, 0.25f, 1f),
+            FillBottom = new Vector4(0.85f, 0.25f, 0.25f, 1f),
             BorderColor = new Vector4(0f, 0f, 0f, 0.9f),
             BorderThickness = 2f
         });

@@ -27,7 +27,7 @@ public abstract class GameSession : Application
     public SpriteRenderSystem SpriteRenderer { get; set; } = null!;
     protected Font Font { get; set; } = null!;
     public ParticleSystem Particles { get; set; } = null!;
-    protected Camera2D Camera { get; } = new();
+    public Camera2D Camera { get; } = new();
 
     // === Сессия (пересоздаётся при рестарте) ===
     public World World { get; set; } = null!;
@@ -73,6 +73,8 @@ public abstract class GameSession : Application
         Context.App = this;
         Context.World = World;
         Context.Camera = Camera;
+        Camera.ScreenWidth = Width;
+        Camera.ScreenHeight = Height;
         Context.Events = Events;
         Context.Particles = Particles;
         Context.Font = Font;

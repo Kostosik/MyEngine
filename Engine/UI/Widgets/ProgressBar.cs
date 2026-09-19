@@ -2,48 +2,53 @@
 
 namespace MyEngine.UI.Widgets;
 
-/// <summary>Прогресс-бар: HP, XP, что угодно.</summary>
 public sealed class ProgressBar : UIElement
 {
     /// <summary>От 0.0 до 1.0.</summary>
     public float Value = 1f;
 
-    public Vector4 BackgroundColor = new(0.1f, 0.1f, 0.12f, 1f);
-    public Vector4 FillColor = new(0.85f, 0.25f, 0.25f, 1f);
-    public Vector4 BorderColor = new(0f, 0f, 0f, 0.5f);
+    public Vector4? BackgroundColor = null;
+    public Vector4? FillTop = null;
+    public Vector4? FillBottom = null;
+    public float? CornerRadius = null;
+    public float? Padding = null;
+
+    public Vector4? BorderColor = null;
     public float BorderThickness = 1f;
 
-    public override void Draw(UIRenderContext ctx)
+    public override void DrawBackground(UIRenderContext ctx)
     {
         if (!Visible) return;
 
+        var t = Theme.Current;
+
+        var bg = BackgroundColor ?? t.ProgressBackground;
+        var fTop = FillTop ?? t.ProgressFillTop;
+        var fBottom = FillBottom ?? t.ProgressFillBottom;
+        var corner = CornerRadius ?? t.ProgressCornerRadius;
+        var pad = Padding ?? t.ProgressPadding;
+
         var v = System.Math.Clamp(Value, 0f, 1f);
 
-        // Фон
-        ctx.Batch.DrawRect(Bounds.Center, Bounds.Size, BackgroundColor);
+        ctx.Rounded.DrawRoundedRect(Bounds.Position, Bounds.Size, bg, bg, corner);
 
-        // Заливка (растёт слева)
-        if (v > 0f)
+        if (v > 0.01f)
         {
-            float fillW = Bounds.Width * v;
-            var fillCenter = new Vector2(Bounds.X + fillW * 0.5f, Bounds.Center.Y);
-            ctx.Batch.DrawRect(fillCenter, new Vector2(fillW, Bounds.Height), FillColor);
+            var innerPos = Bounds.Position + new Vector2(pad, pad);
+            var innerSize = new Vector2(
+                (Bounds.Width - pad * 2) * v,
+                 Bounds.Height - pad * 2);
+            float innerRadius = System.Math.Max(0f, corner - pad);
+
+            ctx.Rounded.DrawRoundedRect(innerPos, innerSize, fTop, fBottom, innerRadius);
         }
 
-        // Граница
-        if (BorderThickness > 0f)
+        // рамка — если API позволяет
+        if (BorderColor.HasValue && BorderThickness > 0f)
         {
-            float t = BorderThickness;
-            ctx.Batch.DrawRect(new Vector2(Bounds.Center.X, Bounds.Top + t * 0.5f),
-                new Vector2(Bounds.Width, t), BorderColor);
-            ctx.Batch.DrawRect(new Vector2(Bounds.Center.X, Bounds.Bottom - t * 0.5f),
-                new Vector2(Bounds.Width, t), BorderColor);
-            ctx.Batch.DrawRect(new Vector2(Bounds.Left + t * 0.5f, Bounds.Center.Y),
-                new Vector2(t, Bounds.Height), BorderColor);
-            ctx.Batch.DrawRect(new Vector2(Bounds.Right - t * 0.5f, Bounds.Center.Y),
-                new Vector2(t, Bounds.Height), BorderColor);
+            // TODO: ctx.Rounded.DrawBorder(...)
         }
 
-        base.Draw(ctx);
+        base.DrawBackground(ctx);
     }
 }

@@ -16,6 +16,9 @@ public sealed class Camera2D
     public Vector2 Position = Vector2.Zero;
     public float Zoom = 1f;
 
+    public int ScreenWidth { get; set; }
+    public int ScreenHeight { get; set; }
+
     // --- Deadzone ---
     /// <summary>
     /// Размер центральной зоны, внутри которой цель может двигаться,

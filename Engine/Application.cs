@@ -84,6 +84,9 @@ public abstract class Application : IDisposable
     private SceneManager _scenes = null!;
     public SceneManager Scenes => _scenes;
 
+    private AssetManifest _assets = new();
+    public AssetManifest Assets => _assets;
+
     public ConsoleSystem? Console => Debug.Get<ConsoleTool>()?.Console;
     private Profiler _profiler = null!;
     public Profiler Profiler => _profiler;
@@ -128,6 +131,7 @@ public abstract class Application : IDisposable
 
         _clock.Restart();
         _lastTime = _clock.Elapsed.TotalSeconds;
+        _assets.Load(Path.Combine(AppContext.BaseDirectory, "Assets", "Manifest.json"));
 
         Load();
     }
@@ -239,6 +243,7 @@ public abstract class Application : IDisposable
 
         RenderScene();
         RenderDebugImGui();
+
 
         Input.EndFrame();
         _profiler.EndFrame();

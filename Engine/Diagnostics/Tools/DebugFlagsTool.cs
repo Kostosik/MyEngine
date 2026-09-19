@@ -22,8 +22,7 @@ public sealed class DebugFlagsTool : IDebugTool
         if (input.ConsumeDebugPressed(DebugAction.ToggleGrid))
             DebugConfig.ShowGrid = !DebugConfig.ShowGrid;
 
-        if (input.ConsumeDebugPressed(DebugAction.ToggleTimeline))
-            DebugConfig.ShowTimeline = !DebugConfig.ShowTimeline;
+
     }
 
     public void Draw() { }   // окна нет — рисовать нечего

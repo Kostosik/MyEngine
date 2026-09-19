@@ -19,10 +19,10 @@ using MyEngine.GameFlow;
 using MyEngine.InputEngine;
 using MyEngine.Math;
 using MyEngine.Rendering;
+using MyEngine.Serialization.Binary;
 using MyEngine.Systems;
 using MyEngine.Time;
 using MyEngine.UI;
-using Silk.NET.Input;
 using Silk.NET.OpenGL;
 using System.Numerics;
 
@@ -112,8 +112,16 @@ public sealed class MyGame : GameSession
         UI.Batch = Batch;
         UI.Font = Font;
         UI.White = Texture2D.White(GL);
+        UI.Rounded = UIRounded;
 
-        
+        BinaryComponentRegistry _binaryRegistry = new BinaryComponentRegistry();
+        _binaryRegistry.Register(() => new Transform());
+        _binaryRegistry.Register(() => new Velocity());
+        _binaryRegistry.Register(() => new Collider());
+        _binaryRegistry.Register(() => new Health());
+
+        BinaryWorldSerializer _binarySerializer = new BinaryWorldSerializer(_binaryRegistry);
+
         RegisterConsoleCommands();
         RegisterWatchValues();
     }
@@ -122,7 +130,6 @@ public sealed class MyGame : GameSession
     {
         if (_statesRegistered) return;
         _statesRegistered = true;
-
         // "Loading" больше не нужен — GameSession сам ждёт загрузку.
         // Регистрируем только игровые фазы.
         StateMachine.Register("Playing", new PlayingState(Context));
@@ -537,23 +544,32 @@ public sealed class MyGame : GameSession
         _gameHud?.Refresh();
 
         // Инспектор (debug) — одна проверка, не три
+#if DEBUG
         if (DebugConfig.Available)
         {
-            if (Input.ConsumeMousePressed(MouseButton.Right) && !UI.IsMouseOver(Input.MousePosition))
-                _inspector.PickAt(Input.MousePosition);
-
-            if (Input.ConsumeDebugPressed(DebugAction.ToggleEntityInspector))
-                _inspector.Visible = !_inspector.Visible;
-
+            // F6 — World Inspector (окно со списком сущностей по компонентам)
             if (Input.ConsumeDebugPressed(DebugAction.ToggleWorldInspector))
                 _worldInspectorWindow.Visible = !_worldInspectorWindow.Visible;
 
+            // F7 — NavGrid paths (линии путей AI)
+            if (Input.ConsumeDebugPressed(DebugAction.ToggleNavGridPaths))
+                NavGridDebugDraw.ShowPaths = !NavGridDebugDraw.ShowPaths;
+
+            // F8 — NavGrid grid (сетка клеток)
             if (Input.ConsumeDebugPressed(DebugAction.ToggleNavGridGrid))
                 NavGridDebugDraw.ShowGrid = !NavGridDebugDraw.ShowGrid;
 
-            if (Input.ConsumeDebugPressed(DebugAction.ToggleNavGridPaths))
-                NavGridDebugDraw.ShowPaths = !NavGridDebugDraw.ShowPaths;
+            // F10 — Entity Inspector (окно инспектора сущностей)
+            if (Input.ConsumeDebugPressed(DebugAction.ToggleEntityInspector))
+                _inspector.Visible = !_inspector.Visible;
+
+            if (!UI.IsMouseOver(Input.MousePosition)
+    && Input.ConsumeMousePressed(Silk.NET.Input.MouseButton.Right))
+            {
+                _inspector.PickAt(Input.MousePosition);
+            }
         }
+#endif
 
         StateMachine.UpdateVariable(dt);
     }
@@ -613,8 +629,14 @@ public sealed class MyGame : GameSession
         Batch.End();
 
         // 5. UI
+        // Проход 1 — фон (скруглённые прямоугольники)
+        UIRounded.Begin(screenProj);
+        UI.DrawBackground();
+        UIRounded.End();
+
+        // Проход 2 — текст и картинки
         Batch.Begin(screenProj);
-        UI.Draw();
+        UI.DrawForeground();
         Batch.End();
 
         GL.Disable(EnableCap.Blend);
@@ -646,8 +668,6 @@ public sealed class MyGame : GameSession
         // === Отладка ===
         if (DebugConfig.ShowGizmos)
             _debugOverlay.Draw(World);
-
-        if (DebugConfig.ShowGrid)
             NavGridDebugDraw.Draw(World, _navGrid, Camera, Width, Height);
 
         if (DebugConfig.ShowProfiler)

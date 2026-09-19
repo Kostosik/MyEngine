@@ -5,68 +5,61 @@ namespace MyEngine.UI.Widgets;
 public sealed class Label : UIElement
 {
     public string Text = "";
-    public Vector4 Color = Vector4.One;
-    public float Scale = 1f;
+    public Vector4? Color = null;      // null → цвет из темы
+    public float Scale = 1f;           // обычный float
     public TextAlign Align = TextAlign.Left;
 
-    /// <summary>
-    /// Размер текста в пикселях. Кэшируется — пересчитывается только
-    /// при смене Text или Scale. Контекст шрифта — из Draw.
-    /// </summary>
     private Vector2 _cachedSize;
-    private string _cachedText = "";
-    private float _cachedScale = -1f;
+    private string? _cachedText = "";
+    private float _cachedScale = float.NaN;  // NaN гарантирует первый пересчёт
 
     public override Vector2 PreferredSize
     {
         get
         {
-            // Если текст не менялся — из кэша
-            if (_cachedText == Text && MathF.Abs(_cachedScale - Scale) < 0.001f)
-                return _cachedSize;
-
-            _cachedText = Text;
-            _cachedScale = Scale;
-            _cachedSize = Vector2.Zero;  // пока нет Font — не знаем
+            EnsureSizeCache();
             return _cachedSize;
         }
     }
 
-    /// <summary>
-    /// Вызывается из Layout до расчёта размеров — но Font у нас только
-    /// в UIRenderContext. Значит, auto-size Label требует «предварительного
-    /// знания» шрифта. Передаём его через глобальный FontProvider.
-    /// </summary>
     public override void Layout(UIRect parentBounds)
     {
-        // Обновляем кэш через FontProvider, если он задан
-        if (FontProvider.Current != null && AutoSizeX || AutoSizeY)
-        {
-            if (_cachedText != Text || MathF.Abs(_cachedScale - Scale) > 0.001f)
-            {
-                _cachedText = Text;
-                _cachedScale = Scale;
-                _cachedSize = FontProvider.Current.MeasureText(Text, Scale);
-            }
-        }
+        if ((AutoSizeX || AutoSizeY) && FontProvider.Current != null)
+            EnsureSizeCache();
 
         base.Layout(parentBounds);
     }
 
-    public override void Draw(UIRenderContext ctx)
+    public override void DrawForeground(UIRenderContext ctx)
     {
         if (!Visible || string.IsNullOrEmpty(Text)) return;
 
-        var size = ctx.Font.MeasureText(Text, Scale);
+        var t = Theme.Current;
+        var color = Color ?? t.TextColor;
+        float scale = Scale;
+
+        var size = ctx.Font.MeasureText(Text, scale);
 
         float x = Bounds.X;
         if (Align == TextAlign.Center) x = Bounds.Center.X - size.X * 0.5f;
         else if (Align == TextAlign.Right) x = Bounds.Right - size.X;
 
-        float y = Bounds.Y;
-
         ctx.Font.DrawString(ctx.Batch, Text,
-            new Vector2(x, y), Color, Scale);
+            new Vector2(x, Bounds.Y), color, scale);
+
+        base.DrawForeground(ctx);
+    }
+
+    private void EnsureSizeCache()
+    {
+        // float.NaN != float.NaN — поэтому при первом вызове условие false, пересчитаем
+        if (_cachedText == Text && MathF.Abs(_cachedScale - Scale) < 0.001f)
+            return;
+
+        var font = FontProvider.Current;
+        _cachedSize = font != null ? font.MeasureText(Text, Scale) : Vector2.Zero;
+        _cachedText = Text;
+        _cachedScale = Scale;
     }
 }
 

@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using MyEngine.Serialization.Binary;
+using System.Numerics;
 
 namespace MyEngine.Components;
 
@@ -12,7 +13,7 @@ namespace MyEngine.Components;
 ///
 /// Игра работает с Position, как раньше. Иерархия — опциональна.
 /// </summary>
-public sealed class Transform
+public sealed class Transform : IBinarySerializable
 {
     // === Мировые координаты (используются всей игрой) ===
     public Vector2 Position;
@@ -115,5 +116,19 @@ public sealed class Transform
             Position = Parent.Position + localPos;
         else
             Position = localPos;
+    }
+
+    public void Write(BinaryWriter w)
+    {
+        w.Write(Position);
+        w.Write(Rotation);
+        w.Write(Scale);
+    }
+
+    public void Read(BinaryReader r)
+    {
+        Position = r.ReadVector2();
+        Rotation = r.ReadSingle();
+        Scale = r.ReadVector2();
     }
 }

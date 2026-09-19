@@ -1,0 +1,16 @@
+{
+  "root": "Assets",
+  "textures": {
+    "player": "Textures/player_walk.png",
+    "slime": "Textures/slime.png"
+  },
+  "fonts": {
+    "main": "Fonts/main.ttf"
+  },
+  "maps": {
+    "island": "Maps/island.json"
+  },
+  "data": {
+    "enemies": "Data/enemies.json"
+  }
+}

@@ -1,36 +1,58 @@
-﻿using System.Numerics;
+﻿using MyEngine.UI;
+using System.Numerics;
 
-namespace MyEngine.UI.Widgets;
-
-/// <summary>Панель — прямоугольник с фоном. Может содержать детей.</summary>
 public class Panel : UIElement
 {
-    public Vector4 BackgroundColor = new(0.1f, 0.1f, 0.12f, 0.85f);
-    public Vector4 BorderColor = new(0.3f, 0.3f, 0.35f, 1f);
-    public float BorderThickness = 0f;
+    public Vector4? BackgroundTop = null;
+    public Vector4? BackgroundBottom = null;
+    public Vector4? BorderColor = null;
+    public float? BorderThickness = null;
+    public float? CornerRadius = null;
+    public bool? HasShadow = null;
+    public float? ShadowOffset = null;
+    public Vector4? ShadowColor = null;
 
-    public override void Draw(UIRenderContext ctx)
+    public override void DrawBackground(UIRenderContext ctx)
     {
         if (!Visible) return;
 
-        // Фон
-        var center = Bounds.Center;
-        ctx.Batch.DrawRect(center, Bounds.Size, BackgroundColor);
+        var t = Theme.Current;
+        var bgTop = BackgroundTop ?? t.PanelTop;
+        var bgBottom = BackgroundBottom ?? t.PanelBottom;
+        var borderCol = BorderColor ?? t.PanelBorder;
+        var borderThick = BorderThickness ?? t.PanelBorderThickness;
+        var corner = CornerRadius ?? t.PanelCornerRadius;
+        var hasShadow = HasShadow ?? true;
+        var shadowOff = ShadowOffset ?? t.PanelShadowOffset;
+        var shadowCol = ShadowColor ?? t.PanelShadow;
 
-        // Граница (4 тонких прямоугольника)
-        if (BorderThickness > 0f)
+        // Тень
+        if (hasShadow)
         {
-            float t = BorderThickness;
-            ctx.Batch.DrawRect(new Vector2(Bounds.Center.X, Bounds.Top + t * 0.5f),
-                new Vector2(Bounds.Width, t), BorderColor);
-            ctx.Batch.DrawRect(new Vector2(Bounds.Center.X, Bounds.Bottom - t * 0.5f),
-                new Vector2(Bounds.Width, t), BorderColor);
-            ctx.Batch.DrawRect(new Vector2(Bounds.Left + t * 0.5f, Bounds.Center.Y),
-                new Vector2(t, Bounds.Height), BorderColor);
-            ctx.Batch.DrawRect(new Vector2(Bounds.Right - t * 0.5f, Bounds.Center.Y),
-                new Vector2(t, Bounds.Height), BorderColor);
+            var shadowPos = Bounds.Position + new Vector2(0, shadowOff);
+            ctx.Rounded.DrawRoundedRect(
+                shadowPos, Bounds.Size,
+                shadowCol, shadowCol, corner);
         }
 
-        base.Draw(ctx);
+        // Панель
+        ctx.Rounded.DrawRoundedRect(
+            Bounds.Position, Bounds.Size,
+            bgTop, bgBottom, corner);
+
+        // Верхняя подсветка
+        if (borderThick > 0f)
+        {
+            var highlight = borderCol with { W = 0.25f };
+            ctx.Rounded.DrawRoundedRect(
+                Bounds.Position + new Vector2(2, 1),
+                new Vector2(Bounds.Width - 4, 1),
+                highlight, highlight with { W = 0f },
+                corner * 0.8f);
+        }
+
+        base.DrawBackground(ctx);
     }
+
+    // DrawForeground — базовый, обходит детей
 }

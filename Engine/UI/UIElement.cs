@@ -211,10 +211,17 @@ public abstract class UIElement
     }
 
     /// <summary>Отрисовать элемент и его детей.</summary>
-    public virtual void Draw(UIRenderContext ctx)
+    public virtual void DrawBackground(UIRenderContext ctx)
     {
         if (!Visible) return;
-        foreach (var child in Children)
-            child.Draw(ctx);
+        foreach (var c in Children)
+            c.DrawBackground(ctx);
+    }
+
+    public virtual void DrawForeground(UIRenderContext ctx)
+    {
+        if (!Visible) return;
+        foreach (var c in Children)
+            c.DrawForeground(ctx);
     }
 }

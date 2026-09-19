@@ -23,10 +23,13 @@ public sealed class Bindings
         Set(DebugAction.ToggleProfiler, Key.F2);
         Set(DebugAction.ToggleGrid, Key.F3);
         Set(DebugAction.ToggleTimeline, Key.F4);
+        Set(DebugAction.ToggleWorldInspector, Key.F6);
+        Set(DebugAction.ToggleNavGridPaths, Key.F7);
+        Set(DebugAction.ToggleNavGridGrid, Key.F8);
         Set(DebugAction.ToggleConsole, Key.F9);
+        Set(DebugAction.ToggleEntityInspector, Key.F10);
         Set(DebugAction.ToggleWatch, Key.F11);
         Set(DebugAction.ToggleAssetBrowser, Key.F12);
-        // F6, F7, F8, F10 — зарезервированы под inspector / navgrid
     }
 
     // Game
@@ -43,11 +46,11 @@ public sealed class Bindings
 
     public void Print()
     {
-        MyEngine.Diagnostics.Log.Info("Bindings", "=== Game Actions ===");
+        MyEngine.Diagnostics.Log.Info("Bindings", "=== Game ===");
         foreach (var kv in _game)
-            MyEngine.Diagnostics.Log.Info("Bindings", $"  {kv.Key,-12} → {kv.Value}");
+            MyEngine.Diagnostics.Log.Info("Bindings", $"  {kv.Key,-14} → {kv.Value}");
 
-        MyEngine.Diagnostics.Log.Info("Bindings", "=== Debug Actions ===");
+        MyEngine.Diagnostics.Log.Info("Bindings", "=== Debug ===");
         foreach (var kv in _debug)
             MyEngine.Diagnostics.Log.Info("Bindings", $"  {kv.Key,-22} → {kv.Value}");
     }
