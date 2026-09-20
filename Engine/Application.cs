@@ -125,6 +125,9 @@ public abstract class Application : IDisposable
     public IRenderer Renderer => _renderer;
     public OpenGLRenderer GLRenderer => _renderer;
 
+
+    bool _disposed = false;
+    bool shouldDispose = false;
     private void OnLoad()
     {
         InitializeLogger();
@@ -257,6 +260,12 @@ public abstract class Application : IDisposable
 
         Input.EndFrame();
         _profiler.EndFrame();
+
+        if (shouldDispose && !_disposed)
+        {
+            Shutdown();
+        }
+
     }
 
     private void ProcessDebugHotkeys()
@@ -324,23 +333,17 @@ public abstract class Application : IDisposable
 
         _debug.Draw();
 
-        try { _imgui.Render(); }
-        catch { }
+
+        if (!_fatalError.HasError)
+            FatalError.TryCatch(() => _imgui.Render(), "Render");
+
+        //try { _imgui.Render(); }
+        //catch { }
     }
 
     private void OnClosing()
     {
-        Unload();
-
-        Safe.Run("Audio.Dispose", () => _audio.Dispose());
-        Safe.Run("AudioEngine.Dispose", () => _audioEngine.Dispose());
-        Safe.Run("Resources.Dispose", () => _resources.Dispose());
-
-        _debug.Dispose();
-        _imgui.Dispose();
-        _inputCtx.Dispose();
-        _gl.Dispose();
-        _jobs.Dispose(); // ОДИН раз, не два
+        shouldDispose = true;
     }
 
     protected virtual void Load() { }
@@ -362,5 +365,25 @@ public abstract class Application : IDisposable
         Scenes.UpdateVariable(dt);
     }
 
-    public void Dispose() => _window.Dispose();
+    private void Shutdown()
+    {
+        Unload();
+
+        Safe.Run("Audio.Dispose", () => _audio.Dispose());
+        Safe.Run("AudioEngine.Dispose", () => _audioEngine.Dispose());
+        Safe.Run("Resources.Dispose", () => _resources.Dispose());
+
+        _debug.Dispose();
+        _imgui.Dispose();
+        _inputCtx.Dispose();
+        _gl.Dispose();
+        _jobs.Dispose(); // ОДИН раз, не два
+
+        _disposed = true;
+    }
+
+    public void Dispose() 
+    {
+        _window.Dispose(); 
+    }
 }

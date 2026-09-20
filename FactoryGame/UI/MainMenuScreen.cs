@@ -24,7 +24,7 @@ public sealed class MainMenuScreen : Panel
             Offset = new Vector2(0, 120),
             Size = new Vector2(700, 60),
             Color = new Vector4(0.9f, 0.7f, 0.4f, 1f),
-            Scale = 3f,
+            Scale = 2f,
             Align = TextAlign.Center
         });
 
