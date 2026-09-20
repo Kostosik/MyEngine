@@ -250,6 +250,10 @@ public abstract class Application : IDisposable
         RenderScene();
         RenderDebugImGui();
 
+#if DEBUG
+        if (Input.WasPressed(Key.F1))
+            Log.Warn("1",$"F1 pressed. ShowGizmos = {DebugConfig.ShowGizmos}");
+#endif
 
         Input.EndFrame();
         _profiler.EndFrame();

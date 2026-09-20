@@ -1,4 +1,4 @@
-﻿namespace FactoryGame;
+﻿namespace FactoryGame.States;
 
 public sealed class GameState
 {
