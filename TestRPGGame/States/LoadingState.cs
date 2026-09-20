@@ -19,7 +19,7 @@ public sealed class LoadingState : GameStateBase
         if (_getLoader().IsDone)
         {
             _ctx.FinishLoading();
-            _ctx.App.StateMachine.RequestTransition("Playing");
+            _ctx.App.AppGameStateMachine.RequestTransition("Playing");
         }
     }
 }

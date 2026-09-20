@@ -15,7 +15,7 @@ public sealed class PlayingState : GameStateBase
     {
         if (_ctx.Dialogue.IsOpen)
         {
-            _ctx.App.StateMachine.RequestTransition("Dialogue");
+            _ctx.App.AppGameStateMachine.RequestTransition("Dialogue");
             return;
         }
 
@@ -29,7 +29,7 @@ public sealed class PlayingState : GameStateBase
 
         var hp = _ctx.Player.Get<Health>();
         if (hp != null && !hp.IsAlive)
-            _ctx.App.StateMachine.RequestTransition("Dead");
+            _ctx.App.AppGameStateMachine.RequestTransition("Dead");
     }
 
     public override void UpdateVariable(float dt)

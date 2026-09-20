@@ -4,6 +4,7 @@ using MyEngine.Coroutines;
 using MyEngine.Diagnostics;
 using MyEngine.Diagnostics.Console;
 using MyEngine.Diagnostics.Tools;
+using MyEngine.Effects;
 using MyEngine.Events;
 using MyEngine.GameFlow;
 using MyEngine.InputEngine;
@@ -37,7 +38,7 @@ public abstract class Application : IDisposable
 
     private DebugOverlay _debug = null!;
     public DebugOverlay Debug => _debug;
-    protected GL GL => _gl;
+    public GL GL => _gl;
     public Input Input { get; private set; } = null!;
     public int Width => _window.Size.X;
     public int Height => _window.Size.Y;
@@ -66,14 +67,14 @@ public abstract class Application : IDisposable
     public void RequestClose() => _window.Close();
 
     private JobSystem _jobs = null!;
-    protected JobSystem Jobs => _jobs;
+    public JobSystem Jobs => _jobs;
 
     private ResourceManager _resources = null!;
     protected ResourceManager Resources => _resources;
 
     private JobProfiler _jobProfiler = null!;
     private PerfTimelineWindow _timelineWindow = null!;
-    protected PerfTimelineWindow TimelineWindow => _timelineWindow;
+    public PerfTimelineWindow TimelineWindow => _timelineWindow;
 
     private Scheduler _scheduler = new();
     public Scheduler Scheduler => _scheduler;
@@ -92,16 +93,21 @@ public abstract class Application : IDisposable
     public Profiler Profiler => _profiler;
 
     private ProfilerWindow _profilerWindow = null!;
-    protected ProfilerWindow ProfilerWindow => _profilerWindow;
-    private GameStateMachine _stateMachine = new();
-    public GameStateMachine StateMachine => _stateMachine;
+    public ProfilerWindow ProfilerWindow => _profilerWindow;
+    private GameStateMachine _gameStateMachine = new();
+    public GameStateMachine AppGameStateMachine => _gameStateMachine;
     private EventBus _events = null!;
-    protected EventBus Events => _events;
+    public EventBus Events => _events;
 
     private UIRoot _ui = null!;
     public UIRoot UI => _ui;
     private UIRoundedRenderer _uiRounded = null!;
     public UIRoundedRenderer UIRounded => _uiRounded;
+
+    public SpriteBatch Batch { get; set; } = null!;
+    public Font Font { get; set; } = null!;
+    public ParticleSystem Particles { get; set; } = null!;
+    public Camera2D Camera { get; } = new();
 
     private FatalErrorOverlay _fatalError = new();
     protected FatalErrorOverlay FatalError => _fatalError;

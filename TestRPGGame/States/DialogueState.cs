@@ -13,7 +13,7 @@ public sealed class DialogueState : GameStateBase
     {
         if (!_ctx.Dialogue.IsOpen)
         {
-            _ctx.App.StateMachine.RequestTransition("Playing");
+            _ctx.App.AppGameStateMachine.RequestTransition("Playing");
             return;
         }
 

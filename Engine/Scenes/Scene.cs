@@ -1,42 +1,46 @@
 ﻿using MyEngine.Ecs;
+using MyEngine.GameFlow;
+using MyEngine.Rendering;
+using MyEngine.Systems;
 
 namespace MyEngine.Scenes;
 
 /// <summary>
 /// Базовый класс сцены. Одна сцена = один игровой мир со своей логикой.
 ///
-/// Каждая сцена владеет своим World. При переключении старый World
-/// уничтожается, новый создаётся в OnLoad.
-///
 /// Жизненный цикл:
-///   OnLoad       — при первом появлении в стеке. Создай мир, спавни сущности.
-///   Update       — каждый фиксированный шаг (60 Гц).
-///   UpdateVariable — каждый кадр рендера (переменный dt).
-///   Render       — рисует мир через свой SpriteBatch.
-///   OnImGui      — ImGui поверх (HUD, отладочные панели).
-///   OnUnload     — при выгрузке из стека. Освободи ресурсы.
+///   OnLoad       — при первом появлении в стеке.
+///   Update       — фиксированный шаг (60 Гц).
+///   UpdateVariable — каждый кадр рендера.
+///   Render       — рисует мир.
+///   OnImGui      — ImGui поверх.
+///   OnUnload     — при выгрузке из стека.
 /// </summary>
 public abstract class Scene
 {
-    /// <summary>Имя сцены (для отладки и переходов).</summary>
     public string Name { get; set; } = "";
 
-    /// <summary>
-    /// Мир этой сцены. Создаётся в конструкторе, может быть
-    /// пересоздан в OnLoad (например, при рестарте уровня).
-    /// </summary>
+    /// <summary>Мир этой сцены. Пересоздаётся в OnLoad.</summary>
     public World World { get; protected set; } = new();
 
-    /// <summary>
-    /// Если true и сцена НЕ верхняя в стеке — она всё равно рисуется.
-    /// Используется для паузы: игра на фоне, меню поверх.
-    /// </summary>
+    /// <summary>Игровой контекст. Создаётся в OnLoad.</summary>
+    public GameContext Context { get; protected set; } = null!;
+
+    /// <summary>Системы фиксированного шага.</summary>
+    public SystemScheduler UpdateSystems { get; } = new();
+
+    /// <summary>Системы переменного шага.</summary>
+    public SystemScheduler VariableSystems { get; } = new();
+
+    /// <summary>Идёт ли загрузка. Пока true — Update/UpdateVariable не тикают.</summary>
+    public bool IsLoading { get; protected set; }
+
+    // === Стек ===
+
+    /// <summary>Если true и сцена НЕ верхняя — она всё равно рисуется.</summary>
     public bool RenderBelow { get; set; } = false;
 
-    /// <summary>
-    /// Если true и сцена НЕ верхняя — её Update не вызывается.
-    /// Обычно true (пауза), но можно поставить false для фоновых эффектов.
-    /// </summary>
+    /// <summary>Если true и сцена НЕ верхняя — её Update не вызывается.</summary>
     public bool PauseBelow { get; set; } = true;
 
     // ============================================================
@@ -52,11 +56,40 @@ public abstract class Scene
     public virtual void Render(Application app) { }
     public virtual void OnImGui(Application app) { }
 
-    /// <summary>
-    /// Пересоздать мир с нуля. Полезно для рестарта уровня.
-    /// </summary>
+    // ============================================================
+    // Вспомогательное
+    // ============================================================
+
+    /// <summary>Пересоздать мир. Полезно для рестарта уровня.</summary>
     protected void ResetWorld()
     {
         World = new World();
     }
+
+    /// <summary>
+    /// Проверка готовности загрузки. Переопределяется в игре.
+    /// Вызывать каждый кадр рендера — если вернёт true, IsLoading
+    /// станет false, и сцена начнёт тикать.
+    /// </summary>
+    protected virtual bool IsLoadingComplete() => true;
+
+    /// <summary>Обработать завершение загрузки. Переопределяется в игре.</summary>
+    protected virtual void OnLoadingComplete() { }
+
+    /// <summary>
+    /// Вызывать каждый кадр рендера сцены, пока IsLoading == true.
+    /// Когда готово — вызывает OnLoadingComplete один раз.
+    /// </summary>
+    public void TickLoading()
+    {
+        if (!IsLoading) return;
+        if (IsLoadingComplete())
+        {
+            IsLoading = false;
+            OnLoadingComplete();
+        }
+    }
+
+    /// <summary>Установить флаг загрузки вручную. Например, при старте сессии.</summary>
+    protected void BeginLoading() => IsLoading = true;
 }
